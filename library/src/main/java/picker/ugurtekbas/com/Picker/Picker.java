@@ -212,6 +212,9 @@ public class Picker extends View {
         paint.setAlpha(isEnabled() ? paint.getAlpha() : 77);
         paint.setXfermode(null);
         canvas.drawCircle(dialX, dialY, dialRadius, paint);
+        if (timeListener != null) {
+            timeListener.timeChanged(getTime());
+        }
     }
 
     @Override
@@ -243,9 +246,6 @@ public class Picker extends View {
             case MotionEvent.ACTION_MOVE:
                 if (isMoving) {
                     angle = (float) Math.atan2(posY - slopY, posX - slopX);
-                    if (timeListener != null) {
-                        timeListener.timeChanged(getTime());
-                    }
                     invalidate();
                 } else {
                     getParent().requestDisallowInterceptTouchEvent(false);
